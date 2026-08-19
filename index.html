@@ -68,11 +68,13 @@
   .xfactor-row { display: grid; grid-template-columns: 14px 110px 1fr 28px; align-items: center; gap: 0.625rem; margin-bottom: 0.375rem; }
   .xfactor-label { font-size: 0.7rem; color: var(--text-secondary); display: flex; align-items: center; gap: 4px; }
   .xfactor-val { font-family: var(--font-mono); font-size: 0.7rem; text-align: right; color: var(--text-tertiary); }
-  .durability-toggle { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: var(--text-secondary); cursor: pointer; padding-left: 20px; }
+  .durability-toggle { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: var(--text-secondary); cursor: pointer; padding-left: 0; }
   input[type="checkbox"] { width: 13px; height: 13px; cursor: pointer; accent-color: var(--navy); }
   .card-divider { border: none; border-top: 1px solid var(--border); margin: 0.875rem 0 0.75rem; }
   .note-overview { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 0.375rem; }
   .note-recent { font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.5; font-style: italic; }
+  .note-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 3px; display: block; font-style: normal; }
+  .note-updated { font-size: 0.65rem; color: var(--text-tertiary); margin-top: 6px; font-style: normal; }
   .disclaimer { background: #FFFBF0; border: 1px solid #E8D9A0; border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; font-size: 0.75rem; color: #7A6830; line-height: 1.5; }
   footer { text-align: center; padding: 2rem 1rem; font-size: 0.72rem; color: var(--text-tertiary); line-height: 1.6; border-top: 1px solid var(--border); max-width: 900px; margin: 0 auto; }
   @media (max-width: 480px) {
@@ -93,12 +95,15 @@
   <h1>Which jersey should<br>you <em>actually</em> buy?</h1>
   <p>Score players on what matters, weight the factors that are important to you, and add your own personal twist with My X-Factor.</p>
 </div>
+<div style="background:#1A2B42;text-align:center;padding:0.5rem 1rem;font-size:0.7rem;color:#6A7D96;letter-spacing:0.03em;">
+  Player notes are AI-generated using public data &amp; reviewed for accuracy &nbsp;·&nbsp; Scores updated regularly &nbsp;·&nbsp; <a href="https://forms.gle/LbfwkHHpEqBqBEvW7" target="_blank" rel="noopener" style="color:#8A9BB0;text-decoration:underline;">Flag an inaccuracy</a>
+</div>
 <div class="team-switcher">
   <button class="team-btn active" data-team="giants">NY Giants</button>
   <button class="team-btn" data-team="niners">San Francisco 49ers</button>
 </div>
 <div class="app">
-  <div class="disclaimer"><strong>Prototype — feedback welcome.</strong> Scores are formula-generated using public data as of August 2026. Player notes are AI-generated. Rosters and scores update regularly. Something seem off? Let us know.</div>
+  <div class="disclaimer"><strong>Prototype — feedback welcome.</strong> Scores are formula-generated using public data. Rosters updated regularly. Something seem off? <a href="https://forms.gle/LbfwkHHpEqBqBEvW7" target="_blank" rel="noopener" style="color:#7A6830;">Flag it here →</a></div>
   <div class="controls-card">
     <span class="controls-label">How much does each factor matter to you?</span>
     <div class="sliders-grid" id="sliders"></div>
@@ -107,8 +112,9 @@
 </div>
 <footer>
   JerseyAdvisor is an independent tool — not affiliated with the NFL, any team, or any jersey manufacturer.<br>
-  Scores reflect public data and are updated regularly. Player notes are AI-generated and reviewed for accuracy.<br><br>
-  Prototype built August 2026. Feedback? Text or email the creator. Affiliate links to purchase jerseys coming soon.
+  Player notes are <strong>AI-generated</strong> using public data and reviewed for accuracy. Scores and rosters updated regularly.<br><br>
+  <strong>Something seem off?</strong> <a href="https://forms.gle/LbfwkHHpEqBqBEvW7" target="_blank" rel="noopener">Flag an inaccurate note here</a> &nbsp;·&nbsp; <a href="mailto:jerseyadvisortool@gmail.com">Contact us</a><br><br>
+  Affiliate links to purchase jerseys coming soon &nbsp;·&nbsp; Prototype · August 2026
 </footer>
 <script>
 const TOOLTIPS = {
@@ -337,8 +343,11 @@ function makeCard(p,i,team){
       </label>
     </div>
     <hr class="card-divider">
+    <span class="note-label">Overview</span>
     <p class="note-overview">${p.overview}</p>
-    <p class="note-recent">${p.recent}</p>`;
+    <span class="note-label" style="margin-top:8px;">Latest update</span>
+    <p class="note-recent">${p.recent}</p>
+    <p class="note-updated">Last checked: August 2026</p>`;
 
   card.querySelector(`[data-wc-chk="${p.name}"]`).addEventListener('change',e=>{
     perPlayer[p.name].wcOn=e.target.checked;
