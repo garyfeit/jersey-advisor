@@ -30,10 +30,14 @@
   .hero p { font-size: 0.9rem; color: #8A95A3; max-width: 520px; margin: 0 auto; line-height: 1.5; }
   .ai-strip { background: #1A2B42; text-align: center; padding: 0.5rem 1rem; font-size: 0.7rem; color: #6A7D96; letter-spacing: 0.03em; }
   .ai-strip a { color: #8A9BB0; text-decoration: underline; }
-  .team-switcher { background: var(--navy); padding: 0 1.5rem 1.5rem; display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
-  .team-btn { font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.5rem 1.25rem; border-radius: 4px; border: 2px solid #2A3A52; cursor: pointer; transition: all 0.15s; background: transparent; color: var(--slate); }
-  .team-btn.active { background: var(--cream); color: var(--navy); border-color: var(--cream); }
-  .team-btn:hover:not(.active) { border-color: var(--cream); color: var(--cream); }
+  .team-nav { background: var(--navy); padding: 0.75rem 1rem 1rem; }
+  .team-nav-label { font-family: var(--font-mono); font-size: 0.65rem; color: #5A6472; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; display: block; margin-bottom: 0.625rem; }
+  .team-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; max-width: 900px; margin: 0 auto; }
+  .team-tile { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 64px; height: 48px; border-radius: 6px; border: 2px solid transparent; cursor: pointer; transition: all 0.15s; font-family: var(--font-display); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.06em; color: rgba(255,255,255,0.9); position: relative; }
+  .team-tile:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); opacity: 0.9; }
+  .team-tile.active { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), 0 4px 16px rgba(201,164,92,0.3); transform: translateY(-1px); }
+  .team-tile span { font-size: 0.6rem; font-family: var(--font-mono); font-weight: 400; opacity: 0.8; letter-spacing: 0.04em; margin-top: 1px; }
+  .legacy-badge { font-family: var(--font-body); font-size: 0.6rem; color: var(--gold); background: rgba(201,164,92,0.12); border: 1px solid rgba(201,164,92,0.35); padding: 1px 5px; border-radius: 3px; font-weight: 600; text-transform: none; letter-spacing: 0; margin-left: 4px; vertical-align: middle; }
   .app { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
   .controls-card { background: var(--card-bg); border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border); }
   .controls-label { font-family: var(--font-display); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 1rem; display: block; }
@@ -102,11 +106,9 @@
 <div class="ai-strip">
   Player notes are AI-generated using public data &amp; reviewed for accuracy &nbsp;·&nbsp; Scores updated regularly &nbsp;·&nbsp; <a href="https://forms.gle/LbfwkHHpEqBqBEvW7" target="_blank" rel="noopener">Flag an inaccuracy</a>
 </div>
-<div class="team-switcher">
-  <button class="team-btn active" data-team="giants">NY Giants</button>
-  <button class="team-btn" data-team="cowboys">Dallas Cowboys</button>
-  <button class="team-btn" data-team="chiefs">Kansas City Chiefs</button>
-  <button class="team-btn" data-team="niners">San Francisco 49ers</button>
+<div class="team-nav">
+  <span class="team-nav-label">Select a team</span>
+  <div class="team-grid" id="teamGrid"></div>
 </div>
 <div class="app">
   <div class="disclaimer"><strong>Prototype — feedback welcome.</strong> Scores are formula-generated using public data. Current NFL players only — legends mode coming soon. Something seem off? <a href="https://forms.gle/LbfwkHHpEqBqBEvW7" target="_blank" rel="noopener">Flag it here →</a></div>
@@ -127,7 +129,7 @@
 <script>
 const TOOLTIPS={
   quality:"How good is this player on the field right now? Uses stats, PFF grades, and accolades — weighted toward recent seasons.",
-  tenure:"How likely is this player to still be on this team in 2-3 years? Based on contract structure, guaranteed money, age, and team signals.",
+  tenure:"How likely is this player to still be on this team in 2-3 years? Based on contract structure, guaranteed money, age, and team signals. For players marked 'legacy jersey,' a low score reflects a farewell season rather than departure risk — see the player note for context.",
   injury:"How often does this player stay healthy and available? Based on games missed, injury type (recurring vs. one-time), and position risk.",
   conduct:"How does this player conduct themselves on AND off the field? Based on documented incidents only — suspensions, fines, legal issues. Higher = better sportsmanship.",
   popularity:"How in-demand is this player's jersey? Based on NFLPA sales rankings, social media following, endorsements, and Pro Bowl fan votes.",
@@ -174,7 +176,7 @@ const TEAMS={
   ]},
   chiefs:{name:'Kansas City Chiefs',color1:'#E31837',color2:'#FFB81C',accent:'#FFFFFF',players:[
     {name:"Patrick Mahomes",pos:"QB",num:15,quality:9.5,tenure:9.5,injury:5.5,conduct:8.5,popularity:10.0,overview:"The greatest quarterback of his generation — three Super Bowl titles, two MVPs, and now a historic $504.75M extension through 2033 — Mahomes is the safest long-term jersey in the NFL, though he's working back from a torn ACL and LCL suffered in Week 15.",recent:"Cleared for full training camp participation and trending toward a Week 1 start against Denver; coaches say he 'sometimes forgets' about the knee during competitive reps, and he's deliberately planning to run less in 2026."},
-    {name:"Travis Kelce",pos:"TE",num:87,quality:8.0,tenure:4.0,injury:7.5,conduct:8.5,popularity:9.5,overview:"The greatest tight end in NFL history and one of the most famous athletes in America enters what is widely expected to be his final season at 37 — a farewell-tour jersey with enormous sentimental value and a clear end date.",recent:"Playing on a one-year deal and publicly motivated to prove he can play at a higher level than his 2025 season (76 catches, 851 yards); said Wednesday he wants to 'prove to myself that I can play at a better level than I did last year.'"},
+    {name:"Travis Kelce",pos:"TE",num:87,legacy:true,quality:8.0,tenure:4.0,injury:7.5,conduct:8.5,popularity:9.5,overview:"The greatest tight end in NFL history and one of the most famous athletes in America enters what is widely expected to be his final season at 37 — a farewell-tour jersey with enormous sentimental value and a clear end date.",recent:"Playing on a one-year deal and publicly motivated to prove he can play at a higher level than his 2025 season (76 catches, 851 yards); said Wednesday he wants to 'prove to myself that I can play at a better level than I did last year.'"},
     {name:"Rashee Rice",pos:"WR",num:4,quality:7.5,tenure:5.0,injury:5.5,conduct:3.5,popularity:7.5,overview:"A breakout rookie who has since been consumed by off-field chaos — two felony guilty pleas for a 2024 street racing crash, a 6-game NFL suspension, knee surgery, and 30 days in jail for a probation violation — Rice enters the final year of his contract with elite talent and maximum complexity.",recent:"Released from jail on June 16 and cleared for training camp; the Chiefs have no plans to extend him, making 2026 a prove-it year on every dimension — on the field, in the courtroom, and in the locker room."},
     {name:"Xavier Worthy",pos:"WR",num:1,quality:6.5,tenure:8.5,injury:5.0,conduct:8.5,popularity:6.5,overview:"A first-round burner (2024, #28 overall) who played his entire sophomore season with a torn labrum and dislocated shoulder after a collision with Travis Kelce on the season's third snap — the durability hit is real, but the talent and the contract make this a buy-in-early pick.",recent:"Post-surgery and described as healthy heading into camp; Mahomes has expressed excitement about finally having a fully healthy Worthy as his deep threat opposite Rice."},
     {name:"Trey Smith",pos:"RG",num:65,quality:8.5,tenure:8.0,injury:8.0,conduct:8.5,popularity:5.5,overview:"A Pro Bowl, All-Pro right guard and one of the most dominant interior offensive linemen in football, Smith is the kind of long-term, high-character cornerstone whose jersey signals genuine football knowledge.",recent:"No notable updates this offseason; entering camp as one of the anchors of an offensive line that will be tested protecting Mahomes in his first season back from ACL surgery."},
@@ -278,7 +280,7 @@ function makeCard(p,i,team){
     <div class="card-header">
       <div class="jersey-wrap">${jerseyHTML(p.num,p.name,team.color1,team.color2,team.accent)}</div>
       <div>
-        <div class="player-name">${p.name}${p.userSuggested?'<span class="user-suggested"> fan pick</span>':''}</div>
+        <div class="player-name">${p.name}${p.userSuggested?'<span class="user-suggested"> fan pick</span>':''}${p.legacy?'<span class="legacy-badge">legacy jersey</span>':''}</div>
         <div class="player-meta">#${p.num} &middot; ${p.pos}</div>
       </div>
       <div class="score-block">
@@ -350,14 +352,47 @@ function resortCards(){
     if(card){cardsEl.appendChild(card);card.querySelector('[data-rank]').textContent=i===0?'Top match':`#${i+1}`;card.className='player-card'+(i===0?' top-match':'');}
   });
 }
-document.querySelectorAll('.team-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    currentTeam=btn.dataset.team;
-    document.querySelectorAll('.team-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');buildCards();
+// ── Team tile configuration ───────────────────────────────────────────────
+const TEAM_TILES = [
+  { key: 'giants',  abbr: 'NYG',  city: 'NY Giants',       c1: '#0B1B32', c2: '#C8262A' },
+  { key: 'cowboys', abbr: 'DAL',  city: 'Cowboys',         c1: '#003594', c2: '#869397' },
+  { key: 'chiefs',  abbr: 'KC',   city: 'Chiefs',          c1: '#E31837', c2: '#FFB81C' },
+  { key: 'niners',  abbr: 'SF',   city: '49ers',           c1: '#AA0000', c2: '#B3995D' },
+];
+
+// ── Build tile navigation ─────────────────────────────────────────────────
+function buildTileNav() {
+  const grid = document.getElementById('teamGrid');
+  grid.innerHTML = '';
+  TEAM_TILES.forEach(t => {
+    const tile = document.createElement('button');
+    tile.className = 'team-tile' + (t.key === currentTeam ? ' active' : '');
+    tile.setAttribute('data-team', t.key);
+    tile.style.background = t.c1;
+    tile.innerHTML = `${t.abbr}<span>${t.city}</span>`;
+    tile.style.borderColor = t.key === currentTeam ? 'var(--gold)' : 'transparent';
+    tile.addEventListener('click', () => {
+      currentTeam = t.key;
+      sessionStorage.setItem('ja_team', t.key);
+      document.querySelectorAll('.team-tile').forEach(el => {
+        el.classList.remove('active');
+        el.style.borderColor = 'transparent';
+      });
+      tile.classList.add('active');
+      tile.style.borderColor = 'var(--gold)';
+      buildCards();
+    });
+    grid.appendChild(tile);
   });
-});
-buildSliders();buildCards();
+}
+
+// ── Init with sessionStorage or default ──────────────────────────────────
+const savedTeam = sessionStorage.getItem('ja_team');
+if (savedTeam && TEAMS[savedTeam]) currentTeam = savedTeam;
+
+buildSliders();
+buildTileNav();
+buildCards();
 </script>
 </body>
 </html>
