@@ -37,7 +37,9 @@
   .team-tile:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); opacity: 0.9; }
   .team-tile.active { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), 0 4px 16px rgba(201,164,92,0.3); transform: translateY(-1px); }
   .team-tile span { font-size: 0.6rem; font-family: var(--font-mono); font-weight: 400; opacity: 0.8; letter-spacing: 0.04em; margin-top: 1px; }
-  .legacy-badge { font-family: var(--font-body); font-size: 0.6rem; color: var(--gold); background: rgba(201,164,92,0.12); border: 1px solid rgba(201,164,92,0.35); padding: 1px 5px; border-radius: 3px; font-weight: 600; text-transform: none; letter-spacing: 0; margin-left: 4px; vertical-align: middle; }
+  .legacy-badge { font-family: var(--font-body); font-size: 0.6rem; color: var(--gold); background: rgba(201,164,92,0.12); border: 1px solid rgba(201,164,92,0.35); padding: 1px 5px; border-radius: 3px; font-weight: 600; text-transform: none; letter-spacing: 0; margin-left: 4px; vertical-align: middle; cursor: help; position: relative; }
+  .legacy-badge:hover .legacy-tip { display: block; }
+  .legacy-tip { display: none; position: absolute; left: 0; top: 20px; background: var(--navy); color: var(--cream); font-size: 0.7rem; line-height: 1.4; padding: 0.5rem 0.75rem; border-radius: 6px; width: 240px; z-index: 50; font-weight: 400; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
   .app { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
   .controls-card { background: var(--card-bg); border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border); }
   .controls-label { font-family: var(--font-display); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 1rem; display: block; }
@@ -129,7 +131,7 @@
 <script>
 const TOOLTIPS={
   quality:"How good is this player on the field right now? Uses stats, PFF grades, and accolades — weighted toward recent seasons.",
-  tenure:"How likely is this player to still be on this team in 2-3 years? Based on contract structure, guaranteed money, age, and team signals. For players marked 'legacy jersey,' a low score reflects a farewell season rather than departure risk — see the player note for context.",
+  tenure:"How likely is this player to still be on this team in 2-3 years? Based on contract structure, guaranteed money, age, and team signals.",
   injury:"How often does this player stay healthy and available? Based on games missed, injury type (recurring vs. one-time), and position risk.",
   conduct:"How does this player conduct themselves on AND off the field? Based on documented incidents only — suspensions, fines, legal issues. Higher = better sportsmanship.",
   popularity:"How in-demand is this player's jersey? Based on NFLPA sales rankings, social media following, endorsements, and Pro Bowl fan votes.",
@@ -188,6 +190,56 @@ const TEAMS={
     {name:"Mansoor Delane",pos:"CB",num:5,quality:7.0,tenure:9.5,injury:7.5,conduct:8.5,popularity:5.5,overview:"The #6 overall pick in the 2026 draft and a unanimous All-American from LSU, Delane is the most decorated cornerback prospect in recent memory — the Chiefs' clear long-term answer at CB1 and a buy-in-before-he's-famous jersey.",recent:"Already drawing praise from veterans in training camp; the Chiefs traded the #9 pick from Cleveland to move up and take him, signaling how strongly the organization values this investment."},
     {name:"Harrison Butker",pos:"K",num:7,quality:8.5,tenure:8.5,injury:8.5,conduct:6.5,popularity:7.0,overview:"One of the most accurate and reliable kickers in NFL history and three-time Super Bowl champion, Butker is also one of the most polarizing athletes in sports following his widely-discussed 2024 commencement speech — a jersey with genuine star power and strong personal-values dimensions.",recent:"Missed one training camp practice for personal (non-injury) reasons on August 1; no formal NFL action has been taken regarding the commencement speech controversy, which remains a significant factor for many fans considering his jersey."},
     {name:"Nick Bolton",pos:"LB",num:32,quality:7.0,tenure:8.5,injury:7.0,conduct:8.5,popularity:5.5,overview:"The defensive quarterback of the Kansas City Chiefs dynasty — Bolton has worn the green dot and called the defense since 2022, amassing over 600 career tackles across six seasons while earning two Super Bowl rings as one of the franchise's most important and longest-tenured players.",recent:"Signed a 3-year/$45M deal in March 2025 cementing his role as the starter; enters 2026 under pressure to prove his coverage limitations don't undermine a rebuilt defense with new personnel around him."}
+  ]},
+  patriots:{name:'New England Patriots',color1:'#002244',color2:'#C60C30',accent:'#FFFFFF',players:[
+    {name:"Drake Maye",pos:"QB",num:10,quality:8.0,tenure:9.5,injury:7.0,conduct:8.5,popularity:8.5,
+     overview:"The franchise quarterback of a 14-win Super Bowl team at just 23, Maye is the most exciting Patriots QB since Brady — a dual-threat with elite arm talent who took his lumps in year one, developed dramatically in year two, and now enters year three as the unquestioned face of a legitimate contender.",
+     recent:"Coaches and teammates have been effusive about the early chemistry between Maye and A.J. Brown, with multiple sources describing it as ahead of schedule for a new offensive partnership; Maye enters his third season with higher expectations than any Patriots QB since Brady."},
+    {name:"A.J. Brown",pos:"WR",num:1,quality:9.0,tenure:8.0,injury:6.5,conduct:8.5,popularity:9.0,
+     overview:"A three-time Pro Bowler and one of the best receivers in football, Brown chose #1 out of respect for Julian Edelman while building his own legacy — acquired for a 2028 first-round pick, he's the missing piece the Patriots have needed since their dynasty ended.",
+     recent:"Has lived up to billing in his first weeks of camp, with multiple beat reporters describing him as an immediate locker room and on-field leader; head coach Mike Vrabel called him 'everything we hoped for' after the first week of practice."},
+    {name:"Romeo Doubs",pos:"WR",num:87,quality:7.0,tenure:8.5,injury:7.5,conduct:8.5,popularity:6.0,
+     overview:"A four-year, $70M signing from Green Bay — the largest free agent WR contract in Patriots history — Doubs gives Drake Maye a reliable second option who can work the intermediate routes and do damage in the slot alongside A.J. Brown.",
+     recent:"Expected to fill a role similar to Stefon Diggs' 2025 production; Day 15 of training camp reports noted he's 'on the rise' in the Patriots' offense with strong chemistry with Maye in the slot."},
+    {name:"Rhamondre Stevenson",pos:"RB",num:38,quality:7.0,tenure:7.0,injury:6.5,conduct:8.5,popularity:6.0,
+     overview:"A powerful, reliable lead back who has been the Patriots' primary rusher for four seasons, Stevenson is the kind of durable, team-first player that defines what the Patriots have historically valued at the position.",
+     recent:"No notable updates this offseason; entering camp as the clear RB1 with TreVeyon Henderson pushing as the change-of-pace option in Mike Vrabel's revamped offensive scheme."},
+    {name:"Hunter Henry",pos:"TE",num:85,quality:7.0,tenure:7.0,injury:6.5,conduct:8.5,popularity:5.5,
+     overview:"A Pro Bowl tight end who has quietly been one of the most consistent receiving options in New England for four seasons, Henry is the kind of reliable, veteran presence that earns deep appreciation from informed fans.",
+     recent:"Enters 2026 as the clear TE1 after Julian Hill was placed on season-ending IR; the Patriots' passing game is now built around Brown, Doubs, and Henry as the three primary options for Drake Maye."},
+    {name:"Will Campbell",pos:"LT",num:66,quality:6.5,tenure:9.0,injury:5.5,conduct:8.5,popularity:5.0,
+     overview:"The #4 overall pick in 2025 and the franchise's long-term investment at left tackle, Campbell had a strong regular season before struggling badly in the playoffs — a 'buy in on the potential but know the risk' jersey heading into his second year.",
+     recent:"Allowed 29 pressures in the playoffs — the most by any lineman since 2016 — and enters 2026 with the most to prove of any player on the roster; coaches say his offseason work has been exemplary and they expect a 'significant leap.'"},
+    {name:"Alijah Vera-Tucker",pos:"LG",num:75,quality:7.0,tenure:8.0,injury:5.0,conduct:8.5,popularity:4.5,
+     overview:"A 2021 first-round pick (#14 overall) who signed a 3-year/$42M deal with New England, Vera-Tucker is the Patriots' answer at left guard — elite when healthy, but three injury-shortened seasons in five years make durability the defining question.",
+     recent:"Missed the entire 2025 season with a torn triceps; fully healthy entering 2026 camp and already drawing praise from coaches for his combination of size, athleticism, and football intelligence in his first weeks in Foxboro."},
+    {name:"Mike Onwenu",pos:"RG",num:71,quality:8.0,tenure:7.5,injury:7.5,conduct:8.5,popularity:5.0,
+     overview:"A Pro Bowl right guard and one of the most underrated offensive linemen in the AFC, Onwenu has been a model of consistency and durability for the Patriots — the kind of player whose jersey signals genuine football knowledge.",
+     recent:"No notable updates this offseason; entering his third season as the starting right guard and widely expected to anchor the interior of an offensive line that must protect Drake Maye better than it did in the postseason."},
+    {name:"Christian Gonzalez",pos:"CB",num:0,quality:8.0,tenure:6.5,injury:6.0,conduct:8.5,popularity:7.0,
+     overview:"A rising star cornerback who made a critical interception in Super Bowl LX, Gonzalez is exactly the kind of buy-early franchise cornerstone the Patriots built their secondary around — though an unsigned contract extension and a current camp injury add uncertainty.",
+     recent:"Contract extension talks remain ongoing but unresolved as of August 2026, with both sides described as apart on terms; Gonzalez has expressed his desire to stay in New England long-term, and the team is expected to get a deal done before or during the season."},
+    {name:"Kevin Byard",pos:"S",num:31,quality:7.0,tenure:6.5,injury:6.5,conduct:8.5,popularity:5.5,
+     overview:"A three-time Pro Bowl safety who has been one of the NFL's best ball-hawks for nearly a decade, Byard brings elite instincts and veteran leadership to a Patriots secondary that needs both heading into a Super Bowl defense.",
+     recent:"Signed with New England in March after being released by Chicago; enters camp as the starting free safety alongside Craig Woodson in a secondary that will be tested against a brutal early schedule."},
+    {name:"Dre'Mont Jones",pos:"OLB",num:5,quality:7.0,tenure:8.0,injury:7.5,conduct:8.5,popularity:5.0,
+     overview:"A 3-year/$39.5M signing from Baltimore who had a career-high seven sacks in 2025, Jones gives the Patriots the established edge rusher they needed — a versatile defender who can rush from multiple alignments in Mike Vrabel's new scheme.",
+     recent:"Described by beat reporters as one of the most important offseason acquisitions on either side of the ball; enters camp as the clear OLB1 in a defense that led the AFC in takeaways last season."},
+    {name:"TreVeyon Henderson",pos:"RB",num:32,quality:7.5,tenure:8.5,injury:7.0,conduct:8.0,popularity:6.5,
+     overview:"A second-year back with legitimate star potential, Henderson flashed the kind of explosive playmaking ability in his rookie season that has the Patriots convinced they have a foundational offensive piece — four touchdown runs of 50+ yards and a 5.1 yards-per-carry average had fans buzzing from week one.",
+     recent:"Expected to share the backfield with Rhamondre Stevenson again in 2026, though multiple reports suggest his role will expand as his pass protection improves; already being drafted ahead of Stevenson in fantasy leagues as the more exciting long-term option."},
+    {name:"Milton Williams",pos:"DT",num:97,quality:7.5,tenure:9.0,injury:6.5,conduct:8.5,popularity:5.5,
+     overview:"The Patriots' most expensive free agent signing — a 4-year/$104M deal — Williams is a Super Bowl champion from Philadelphia who brings disruptive pass-rushing ability from the interior and forms one of the AFC's best defensive tackle duos alongside Christian Barmore.",
+     recent:"Had 3.5 sacks and eight quarterback hits in just 12 games in his first Patriots season despite missing five games with an injury; teammates have singled out his leadership and preparation as transformative for the defensive line culture."},
+    {name:"Marcus Jones",pos:"CB",num:25,quality:7.5,tenure:8.5,injury:7.5,conduct:8.5,popularity:6.5,
+     overview:"One of the most unique players in football — joining Deion Sanders as the only players since 1970 to score 40+ yard touchdowns on offense, defense, AND special teams — Jones is the Patriots' slot cornerback, punt returner, and occasional offensive weapon, now signed to a 3-year/$36M extension as a team captain.",
+     recent:"Named a team captain for the first time heading into 2026; his combination of defensive reliability and special teams impact makes him a cornerstone of one of the AFC's most versatile defenses."},
+    {name:"Carlton Davis",pos:"CB",num:7,quality:7.0,tenure:8.0,injury:7.0,conduct:8.5,popularity:5.0,
+     overview:"A physical, press-man cornerback who signed a 3-year/$60M deal to be the Patriots' CB2 alongside Christian Gonzalez, Davis brings the length and contested-catch ability to match up with big, physical receivers — complementing Gonzalez's coverage skills in one of the AFC's best corner duos.",
+     recent:"Enters 2026 having played quality football in his first Patriots season, helping New England reach Super Bowl LX; part of a secondary that features three starting-caliber corners in Gonzalez, Davis, and Marcus Jones."},
+    {name:"Christian Barmore",pos:"DT",num:90,quality:7.0,tenure:7.0,injury:6.0,conduct:8.5,popularity:5.0,
+     overview:"A five-year Patriots veteran and one of the more underappreciated interior defenders in the AFC, Barmore has been the anchor of New England's defensive line since 2021 — a fan favorite whose consistency and effort have earned genuine loyalty in Foxboro.",
+     recent:"No notable updates this offseason; enters camp as the starting DT2 alongside Milton Williams after five seasons of steady production, with the young defensive line around him expected to take a significant step in 2026."}
   ]},
   niners:{name:'San Francisco 49ers',color1:'#AA0000',color2:'#B3995D',accent:'#FFFFFF',players:[
     {name:"Brock Purdy",pos:"QB",num:13,quality:7.5,tenure:9.5,injury:6.0,conduct:8.5,popularity:8.0,overview:"The ultimate underdog story — a former Mr. Irrelevant who became a franchise QB and signed a massive extension — Purdy is the unquestioned face of the 49ers and the safest long-term jersey purchase on the roster.",recent:"Missed 8 games in 2025 with a toe injury but returned to post elite efficiency; Kyle Shanahan has said he expects Purdy to be fully healthy heading into training camp."},
@@ -280,7 +332,7 @@ function makeCard(p,i,team){
     <div class="card-header">
       <div class="jersey-wrap">${jerseyHTML(p.num,p.name,team.color1,team.color2,team.accent)}</div>
       <div>
-        <div class="player-name">${p.name}${p.userSuggested?'<span class="user-suggested"> fan pick</span>':''}${p.legacy?'<span class="legacy-badge">legacy jersey</span>':''}</div>
+        <div class="player-name">${p.name}${p.userSuggested?'<span class="user-suggested"> fan pick</span>':''}${p.legacy?'<span class="legacy-badge">legacy jersey<span class="legacy-tip">This player is expected to retire rather than leave as a free agent — a low Tenure score reflects a farewell season, not departure risk. Consider using My X-Factor to reflect the sentimental value of a legacy jersey.</span></span>':''}</div>
         <div class="player-meta">#${p.num} &middot; ${p.pos}</div>
       </div>
       <div class="score-block">
@@ -354,9 +406,10 @@ function resortCards(){
 }
 // ── Team tile configuration ───────────────────────────────────────────────
 const TEAM_TILES = [
-  { key: 'giants',  abbr: 'NYG',  city: 'NY Giants',       c1: '#0B1B32', c2: '#C8262A' },
+  { key: 'giants',  abbr: 'NYG',  city: 'NY Giants',       c1: '#1A3A5C', c2: '#C8262A' },
   { key: 'cowboys', abbr: 'DAL',  city: 'Cowboys',         c1: '#003594', c2: '#869397' },
   { key: 'chiefs',  abbr: 'KC',   city: 'Chiefs',          c1: '#E31837', c2: '#FFB81C' },
+  { key: 'patriots',abbr: 'NE',   city: 'Patriots',        c1: '#002244', c2: '#C60C30' },
   { key: 'niners',  abbr: 'SF',   city: '49ers',           c1: '#AA0000', c2: '#B3995D' },
 ];
 
