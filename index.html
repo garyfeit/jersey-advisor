@@ -73,7 +73,7 @@
   .bar-fill { height: 100%; border-radius: 3px; transition: width 0.3s ease; }
   .bar-val { font-family: var(--font-mono); font-size: 0.7rem; text-align: right; color: var(--text-primary); }
   .card-controls { margin-bottom: 0.875rem; }
-  .xfactor-row { display: grid; grid-template-columns: 14px 110px 1fr 28px; align-items: center; gap: 0.625rem; margin-bottom: 0.375rem; }
+  .xfactor-row { display: grid; grid-template-columns: 14px 110px 1fr 28px; align-items: center; gap: 0.375rem; margin-bottom: 0.375rem; }
   .xfactor-label { font-size: 0.7rem; color: var(--text-secondary); display: flex; align-items: center; gap: 4px; }
   .xfactor-val { font-family: var(--font-mono); font-size: 0.7rem; text-align: right; color: var(--text-tertiary); }
   .durability-toggle { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: var(--text-secondary); cursor: pointer; padding-left: 0; }
@@ -85,6 +85,9 @@
   .note-updated { font-size: 0.65rem; color: var(--text-tertiary); margin-top: 6px; }
   .disclaimer { background: #FFFBF0; border: 1px solid #E8D9A0; border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; font-size: 0.75rem; color: #7A6830; line-height: 1.5; }
   .disclaimer a { color: #7A6830; }
+  .buy-wrap { margin-top: 0.875rem; padding-top: 0.875rem; border-top: 1px solid var(--border); }
+  .buy-btn { display: inline-block; font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 0.5rem 1.125rem; border-radius: 5px; text-decoration: none; transition: opacity 0.15s; }
+  .buy-btn:hover { opacity: 0.85; }
   footer { text-align: center; padding: 2rem 1rem; font-size: 0.72rem; color: var(--text-tertiary); line-height: 1.8; border-top: 1px solid var(--border); max-width: 900px; margin: 0 auto; }
   footer a { color: var(--text-tertiary); text-decoration: underline; }
   @media (max-width: 480px) {
@@ -125,7 +128,7 @@
   Covers current players on active NFL rosters. Legends and retired player jerseys coming soon.<br>
   Player notes are <strong>AI-generated</strong> using public data and reviewed for accuracy. Scores and rosters updated regularly.<br>
   <strong>Something seem off?</strong> <a href="https://forms.gle/LbfwkHHpEqBqBEvW7" target="_blank" rel="noopener">Flag an inaccurate note here</a> &nbsp;·&nbsp; <a href="mailto:jerseyadvisortool@gmail.com">Contact us</a><br>
-  Affiliate links to purchase jerseys coming soon &nbsp;·&nbsp; Prototype · August 2026
+  <a href="/methodology.html">How scores work →</a> &nbsp;·&nbsp; Prototype · August 2026
 </footer>
 <div style="display:none;">Impact-Site-Verification: 66a4f8a3-4fc5-4571-ac0b-632ce173e146</div>
 <script>
@@ -486,7 +489,8 @@ function makeCard(p,i,team){
     <p class="note-overview">${p.overview}</p>
     <span class="note-label" style="margin-top:8px;">Latest update</span>
     <p class="note-recent">${p.recent}</p>
-    <p class="note-updated">Last checked: August 2026</p>`;
+    <p class="note-updated">Last checked: August 2026</p>
+    <div class="buy-wrap"><a class="buy-btn" href="${getBuyLink(p.name, team.name)}" target="_blank" rel="noopener sponsored">Buy this jersey →</a></div>`;
   card.querySelector(`[data-wc-chk="${p.name}"]`).addEventListener('change',e=>{
     perPlayer[p.name].wcOn=e.target.checked;
     const slider=card.querySelector(`[data-wc-slider="${p.name}"]`);
@@ -532,16 +536,24 @@ function resortCards(){
     if(card){cardsEl.appendChild(card);card.querySelector('[data-rank]').textContent=i===0?'Top match':`#${i+1}`;card.className='player-card'+(i===0?' top-match':'');}
   });
 }
+// ── Affiliate link builder ───────────────────────────────────────────────
+const AFFILIATE_BASE = 'https://fanatics.93n6tx.net/3kMZDr?u=';
+function getBuyLink(playerName, teamName) {
+  const search = encodeURIComponent(playerName + ' ' + teamName + ' jersey');
+  const dest = 'https://www.fanatics.com/search#q=' + search + '&start=0';
+  return AFFILIATE_BASE + encodeURIComponent(dest);
+}
+
 // ── Team tile configuration ───────────────────────────────────────────────
 const TEAM_TILES = [
-  { key: 'giants',  abbr: 'NYG',  city: 'NY Giants',       c1: '#1A3A5C', c2: '#C8262A' },
   { key: 'cowboys', abbr: 'DAL',  city: 'Cowboys',         c1: '#003594', c2: '#869397' },
   { key: 'chiefs',  abbr: 'KC',   city: 'Chiefs',          c1: '#E31837', c2: '#FFB81C' },
-  { key: 'patriots',abbr: 'NE',   city: 'Patriots',        c1: '#002244', c2: '#C60C30' },
-  { key: 'eagles',  abbr: 'PHI',  city: 'Eagles',          c1: '#004C54', c2: '#A5ACAF' },
-  { key: 'seahawks',abbr: 'SEA',  city: 'Seahawks',       c1: '#002244', c2: '#69BE28' },
   { key: 'rams',    abbr: 'LAR',  city: 'Rams',            c1: '#003594', c2: '#FFA300' },
+  { key: 'patriots',abbr: 'NE',   city: 'Patriots',        c1: '#002244', c2: '#C60C30' },
+  { key: 'giants',  abbr: 'NYG',  city: 'NY Giants',       c1: '#1A3A5C', c2: '#C8262A' },
+  { key: 'eagles',  abbr: 'PHI',  city: 'Eagles',          c1: '#004C54', c2: '#A5ACAF' },
   { key: 'niners',  abbr: 'SF',   city: '49ers',           c1: '#AA0000', c2: '#B3995D' },
+  { key: 'seahawks',abbr: 'SEA',  city: 'Seahawks',        c1: '#002244', c2: '#69BE28' },
 ];
 
 // ── Build tile navigation ─────────────────────────────────────────────────
