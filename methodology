@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How JerseyAdvisor Works — Scoring Methodology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0B1B32; --gold: #C9A45C; --cream: #F2EFE6; --slate: #5A6472;
+    --light: #E8E5DC; --page-bg: #F5F3EE; --border: #D8D5CC; --white: #FFFFFF;
+    --text-primary: #0B1B32; --text-secondary: #5A6472; --text-tertiary: #8A95A3;
+    --cat-performance: #378ADD; --cat-tenure: #0F6E56; --cat-durability: #EF9F27;
+    --cat-sportsmanship: #7F77DD; --cat-popularity: #D85A30; --cat-xfactor: #D4537E;
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
+  }
+  body { font-family: var(--font-body); background: var(--page-bg); color: var(--text-primary); min-height: 100vh; }
+  header { background: var(--navy); padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .logo { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--cream); letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; }
+  .logo span { color: var(--gold); }
+  .back-link { font-size: 0.78rem; color: #8A95A3; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+  .back-link:hover { color: var(--cream); }
+  .hero { background: var(--navy); padding: 2rem 1.5rem 2.5rem; text-align: center; border-bottom: 3px solid var(--gold); }
+  .hero h1 { font-family: var(--font-display); font-size: clamp(1.6rem,4vw,2.4rem); font-weight: 700; color: var(--cream); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+  .hero p { font-size: 0.88rem; color: #8A95A3; max-width: 520px; margin: 0 auto; line-height: 1.6; }
+  .content { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  .intro { background: var(--white); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 2rem; }
+  .intro p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+  .intro p + p { margin-top: 0.75rem; }
+  .section-label { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 1rem; display: block; }
+  .cat-card { background: var(--white); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1rem; }
+  .cat-header { display: flex; align-items: center; gap: 12px; margin-bottom: 0.875rem; }
+  .cat-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
+  .cat-scale { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-tertiary); margin-left: auto; }
+  .cat-question { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem; }
+  .cat-desc { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.65; }
+  .cat-factors { margin-top: 0.875rem; padding-top: 0.875rem; border-top: 1px solid var(--border); }
+  .cat-factors-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 0.5rem; display: block; }
+  .factor-list { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+  .factor-tag { font-size: 0.72rem; background: var(--page-bg); border: 1px solid var(--border); padding: 3px 8px; border-radius: 4px; color: var(--text-secondary); }
+  .score-guide { background: var(--white); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1rem; }
+  .score-row { display: grid; grid-template-columns: 56px 1fr; gap: 0.75rem; align-items: start; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+  .score-row:last-child { border-bottom: none; }
+  .score-num { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--text-tertiary); }
+  .score-desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; padding-top: 3px; }
+  .sliders-section { background: var(--white); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1rem; }
+  .sliders-section p { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.65; }
+  .sliders-section p + p { margin-top: 0.75rem; }
+  .roster-section { background: var(--white); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1rem; }
+  .criteria-list { list-style: none; margin-top: 0.75rem; }
+  .criteria-list li { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.6; padding: 0.5rem 0 0.5rem 1.25rem; border-bottom: 1px solid var(--border); position: relative; }
+  .criteria-list li:last-child { border-bottom: none; }
+  .criteria-list li::before { content: '→'; position: absolute; left: 0; color: var(--gold); font-weight: 600; }
+  .ai-section { background: #FFFBF0; border: 1px solid #E8D9A0; border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
+  .ai-section h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #7A6830; margin-bottom: 0.75rem; }
+  .ai-section p { font-size: 0.83rem; color: #7A6830; line-height: 1.65; }
+  .ai-section p + p { margin-top: 0.5rem; }
+  h2 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-primary); margin-bottom: 0.875rem; }
+  footer { text-align: center; padding: 2rem 1rem; font-size: 0.72rem; color: var(--text-tertiary); line-height: 1.8; border-top: 1px solid var(--border); max-width: 760px; margin: 0 auto; }
+  footer a { color: var(--text-tertiary); text-decoration: underline; }
+  @media (max-width: 480px) { .cat-scale { display: none; } }
+</style>
+</head>
+<body>
+<header>
+  <a href="/" class="logo">Jersey<span>Advisor</span></a>
+  <a href="/" class="back-link">← Back to tool</a>
+</header>
+<div class="hero">
+  <h1>How JerseyAdvisor Works</h1>
+  <p>A transparent look at how players are scored, which rosters are included, and how the weight sliders affect your results.</p>
+</div>
+<div class="content">
+
+  <div class="intro">
+    <p>JerseyAdvisor scores current NFL players across five categories, each on a 0–10 scale. Your overall score for a player is the weighted average of those five scores — weighted by the sliders you control. Slide a category to 0 and it's ignored entirely. Slide it to 5 and it counts heavily.</p>
+    <p>Scores are generated using public data including PFF grades, official statistics, contract databases, injury reports, and documented conduct records. Player notes are AI-generated summaries reviewed for accuracy. No score has ever been influenced by commercial relationships — affiliate links to purchase jerseys are provided for convenience and generate a small commission, but have no effect on any score.</p>
+  </div>
+
+  <span class="section-label">The five scoring categories</span>
+
+  <div class="cat-card">
+    <div class="cat-header">
+      <div class="cat-dot" style="background:var(--cat-performance)"></div>
+      <div class="cat-name">Performance</div>
+      <div class="cat-scale">0 – 10</div>
+    </div>
+    <div class="cat-question">How good is this player right now?</div>
+    <div class="cat-desc">Measures on-field production and quality using recent statistics, PFF grades, accolades (Pro Bowls, All-Pro selections, awards), snap count, and approximate value. Recent seasons are weighted more heavily than earlier ones — a player who was elite three years ago but has declined scores lower than one who is elite today. For rookies and players with no NFL sample, scores use a draft proxy based on pick position and college production.</div>
+    <div class="cat-factors">
+      <span class="cat-factors-label">Inputs</span>
+      <div class="factor-list">
+        <span class="factor-tag">PFF grade</span>
+        <span class="factor-tag">Statistics</span>
+        <span class="factor-tag">Pro Bowl / All-Pro</span>
+        <span class="factor-tag">Snap count</span>
+        <span class="factor-tag">Awards</span>
+        <span class="factor-tag">Recent season weighting</span>
+        <span class="factor-tag">Draft proxy (rookies)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-card">
+    <div class="cat-header">
+      <div class="cat-dot" style="background:var(--cat-tenure)"></div>
+      <div class="cat-name">Tenure</div>
+      <div class="cat-scale">0 – 10</div>
+    </div>
+    <div class="cat-question">How likely is this player to still be on this team in 2–3 years?</div>
+    <div class="cat-desc">Measures the likelihood that your jersey stays relevant. A high score means the player is locked in — long contract, large guarantees, strong team signals. A low score means significant uncertainty: a free agent year, trade rumors, or age-related decline. Note: for players marked with a <strong>legacy jersey</strong> badge, a low tenure score reflects an expected farewell season on one team — not departure risk. Hover the badge for more context.</div>
+    <div class="cat-factors">
+      <span class="cat-factors-label">Inputs</span>
+      <div class="factor-list">
+        <span class="factor-tag">Contract years remaining</span>
+        <span class="factor-tag">Guaranteed money</span>
+        <span class="factor-tag">Dead cap</span>
+        <span class="factor-tag">Age vs. positional curve</span>
+        <span class="factor-tag">Team signals</span>
+        <span class="factor-tag">Trade / cut rumors</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-card">
+    <div class="cat-header">
+      <div class="cat-dot" style="background:var(--cat-durability)"></div>
+      <div class="cat-name">Durability</div>
+      <div class="cat-scale">0 – 10</div>
+    </div>
+    <div class="cat-question">How often does this player stay healthy and available?</div>
+    <div class="cat-desc">Measures injury history and availability risk. High-recurrence injury types (soft tissue, chronic joint issues) are penalized more than one-time injuries (broken bone, acute trauma). Positional baselines are applied — some positions carry inherent injury risk regardless of the individual player. Age interacts with injury history: recurring soft-tissue injuries in an older player score lower than the same injuries in a younger one. Use the "Don't penalize for durability" toggle on any card to remove this category from that player's score.</div>
+    <div class="cat-factors">
+      <span class="cat-factors-label">Inputs</span>
+      <div class="factor-list">
+        <span class="factor-tag">Games missed</span>
+        <span class="factor-tag">Injury type (recurring vs. one-time)</span>
+        <span class="factor-tag">Positional baseline</span>
+        <span class="factor-tag">Age × injury interaction</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-card">
+    <div class="cat-header">
+      <div class="cat-dot" style="background:var(--cat-sportsmanship)"></div>
+      <div class="cat-name">Sportsmanship</div>
+      <div class="cat-scale">0 – 10</div>
+    </div>
+    <div class="cat-question">How does this player conduct themselves on and off the field?</div>
+    <div class="cat-desc">Scores player conduct based on documented incidents only — suspensions, fines, legal actions, and formal NFL disciplinary actions. The baseline score is 8.5; players without any documented incidents start there. Incidents are classified by severity: minor on-field penalties (Tier 1) through serious criminal conduct (Tier 4), with a recurrence multiplier for repeat incidents. We do not speculate about rumored behavior or apply reputational judgments not backed by documentation. Higher score = better sportsmanship.</div>
+    <div class="cat-factors">
+      <span class="cat-factors-label">Inputs</span>
+      <div class="factor-list">
+        <span class="factor-tag">NFL suspensions</span>
+        <span class="factor-tag">Legal actions / convictions</span>
+        <span class="factor-tag">Formal fines</span>
+        <span class="factor-tag">Incident severity tier</span>
+        <span class="factor-tag">Recurrence multiplier</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-card">
+    <div class="cat-header">
+      <div class="cat-dot" style="background:var(--cat-popularity)"></div>
+      <div class="cat-name">Popularity</div>
+      <div class="cat-scale">0 – 10</div>
+    </div>
+    <div class="cat-question">How in-demand is this player's jersey right now?</div>
+    <div class="cat-desc">Measures the current demand for a player's jersey based on national recognition and fan engagement. Positional ceilings apply: kickers, fullbacks, and most offensive linemen are capped below the levels achievable by quarterbacks, wide receivers, and skill position stars — accurately reflecting jersey market realities rather than on-field value. A kicker scoring 7.0 in popularity is exceptional for their position.</div>
+    <div class="cat-factors">
+      <span class="cat-factors-label">Inputs</span>
+      <div class="factor-list">
+        <span class="factor-tag">NFLPA top-50 jersey sales</span>
+        <span class="factor-tag">Social media following</span>
+        <span class="factor-tag">National endorsements</span>
+        <span class="factor-tag">Pro Bowl fan votes</span>
+        <span class="factor-tag">Search trends</span>
+        <span class="factor-tag">Positional ceiling</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-card" style="border-color: rgba(212,83,126,0.3);">
+    <div class="cat-header">
+      <div class="cat-dot" style="background:var(--cat-xfactor)"></div>
+      <div class="cat-name">My X-Factor</div>
+      <div class="cat-scale">personal · off by default</div>
+    </div>
+    <div class="cat-question">What factors only you can weigh?</div>
+    <div class="cat-desc">The one score we can't calculate for you. Activate it with the checkbox on any player card, then slide right to boost or left to reduce their score. Use it for: your college connection to a player, their jersey number, personal values alignment, a gut feeling, nostalgia, or anything else the five formula categories can't capture. My X-Factor only affects sorting when you release the slider — so you can explore without the list jumping around.</div>
+  </div>
+
+  <span class="section-label" style="margin-top:1.5rem;">Score reference guide</span>
+
+  <div class="score-guide">
+    <div class="score-row"><div class="score-num">9–10</div><div class="score-desc">Elite — among the best in the league at this dimension. Reserved for true outliers.</div></div>
+    <div class="score-row"><div class="score-num">7–8</div><div class="score-desc">Strong — well above average. A clearly positive signal in this category.</div></div>
+    <div class="score-row"><div class="score-num">5–6</div><div class="score-desc">Average or mixed — meaningful concerns or uncertainty alongside real strengths.</div></div>
+    <div class="score-row"><div class="score-num">3–4</div><div class="score-desc">Below average — notable risk or underperformance in this category.</div></div>
+    <div class="score-row"><div class="score-num">0–2</div><div class="score-desc">Poor — significant concern. A jersey purchase decision should weigh this heavily.</div></div>
+  </div>
+
+  <span class="section-label" style="margin-top:1.5rem;">The weight sliders</span>
+
+  <div class="sliders-section">
+    <p>The five category sliders (0–5) let you control how much each dimension matters to your ranking. At the default setting of 3 for all categories, every factor is weighted equally. Slide Performance to 5 and Tenure to 0 to rank purely by on-field ability. Slide Popularity to 0 if you don't care about jersey trends. No setting is "correct" — the tool is designed to surface the right jersey for each individual fan's values.</p>
+    <p>The overall score shown on each card is a weighted average of whichever categories you have active (above 0), plus My X-Factor if you've activated it for that player. Category scores are on a 0–10 scale; the overall score displayed is also 0–10.</p>
+  </div>
+
+  <span class="section-label" style="margin-top:1.5rem;">Roster inclusion</span>
+
+  <div class="roster-section">
+    <h2>Which players are included</h2>
+    <p style="font-size:0.83rem;color:var(--text-secondary);line-height:1.65;margin-bottom:0.75rem;">Not every player on every roster is included — we focus on players whose jerseys fans are actually likely to consider purchasing. A player qualifies if they meet any one of these criteria:</p>
+    <ul class="criteria-list">
+      <li>Current starting quarterback</li>
+      <li>First-round draft pick still on their rookie contract</li>
+      <li>Career Pro Bowl or All-Pro selection (with soft filters for players far removed from that form)</li>
+      <li>Statistical leader on the team in the prior season</li>
+      <li>Notable signing, trade, or re-signing since the end of the prior season</li>
+      <li>8+ years with the same team on the active roster</li>
+      <li>Started 4+ games in the prior season with notable production AND meaningful fan recognition</li>
+    </ul>
+    <p style="font-size:0.83rem;color:var(--text-secondary);line-height:1.65;margin-top:0.75rem;">When a player is on the borderline, we lean toward inclusion. The tool currently covers current NFL players on active rosters. Legends and retired players are planned for a future update.</p>
+  </div>
+
+  <div class="ai-section">
+    <h3>A note on AI-generated content</h3>
+    <p>Player overview and "Latest update" notes are generated by AI using public data sources including beat reporter coverage, official team communications, contract databases, and statistical records. Notes are reviewed for accuracy before publication and updated regularly throughout the season.</p>
+    <p>AI generation allows us to cover more players more consistently than manual writing would permit — but it also means occasional errors. If you spot something that seems inaccurate, please <a href="https://forms.gle/LbfwkHHpEqBqBEvW7" style="color:#7A6830;">flag it here</a> and we'll review and correct it promptly.</p>
+    <p>Scores are formula-generated and reviewed by humans. No AI model determines scores autonomously — the formulas above are applied consistently, with human judgment applied to edge cases and borderline inclusion decisions.</p>
+  </div>
+
+</div>
+<footer>
+  JerseyAdvisor is an independent tool — not affiliated with the NFL, any team, or any jersey manufacturer.<br>
+  <a href="/">← Back to JerseyAdvisor</a> &nbsp;·&nbsp; <a href="mailto:jerseyadvisortool@gmail.com">Contact us</a> &nbsp;·&nbsp; <a href="https://forms.gle/LbfwkHHpEqBqBEvW7">Flag an inaccuracy</a>
+</footer>
+</body>
+</html>
