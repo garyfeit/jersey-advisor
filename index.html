@@ -128,7 +128,7 @@
   Covers current players on active NFL rosters. Legends and retired player jerseys coming soon.<br>
   Player notes are <strong>AI-generated</strong> using public data and reviewed for accuracy. Scores and rosters updated regularly.<br>
   <strong>Something seem off?</strong> <a href="https://forms.gle/LbfwkHHpEqBqBEvW7" target="_blank" rel="noopener">Flag an inaccurate note here</a> &nbsp;·&nbsp; <a href="mailto:jerseyadvisortool@gmail.com">Contact us</a><br>
-  <a href="/methodology.html">How scores work →</a> &nbsp;·&nbsp; Prototype · August 2026
+  <a href="/how-it-works.html">How scores work →</a> &nbsp;·&nbsp; Prototype · August 2026
 </footer>
 <div style="display:none;">Impact-Site-Verification: 66a4f8a3-4fc5-4571-ac0b-632ce173e146</div>
 <script>
@@ -538,10 +538,9 @@ function resortCards(){
 }
 // ── Affiliate link builder ───────────────────────────────────────────────
 const AFFILIATE_BASE = 'https://fanatics.93n6tx.net/3kMZDr?u=';
+const NFL_JERSEYS_URL = 'https://www.fanatics.com/nfl/jerseys/o-1338+d-53447856+z-8865-128422821';
 function getBuyLink(playerName, teamName) {
-  const search = encodeURIComponent(playerName + ' ' + teamName + ' jersey');
-  const dest = 'https://www.fanatics.com/nfl/jerseys/o-1338+d-53447856+z-8865-128422821#q=' + search;
-  return AFFILIATE_BASE + encodeURIComponent(dest);
+  return AFFILIATE_BASE + encodeURIComponent(NFL_JERSEYS_URL);
 }
 
 // ── Team tile configuration ───────────────────────────────────────────────
