@@ -490,7 +490,7 @@ function makeCard(p,i,team){
     <span class="note-label" style="margin-top:8px;">Latest update</span>
     <p class="note-recent">${p.recent}</p>
     <p class="note-updated">Last checked: August 2026</p>
-    <div class="buy-wrap"><a class="buy-btn" href="${getBuyLink(p.name, team.name)}" target="_blank" rel="noopener sponsored">Buy this jersey →</a></div>`;
+    <div class="buy-wrap"><a class="buy-btn" href="${getBuyLink(p.name, currentTeam)}" target="_blank" rel="noopener sponsored">Buy this jersey →</a></div>`;
   card.querySelector(`[data-wc-chk="${p.name}"]`).addEventListener('change',e=>{
     perPlayer[p.name].wcOn=e.target.checked;
     const slider=card.querySelector(`[data-wc-slider="${p.name}"]`);
@@ -538,21 +538,22 @@ function resortCards(){
 }
 // ── Affiliate link builder ───────────────────────────────────────────────
 const AFFILIATE_BASE = 'https://fanatics.93n6tx.net/3kMZDr?u=';
-const NFL_JERSEYS_URL = 'https://www.fanatics.com/nfl/jerseys/o-1338+d-53447856+z-8865-128422821';
-function getBuyLink(playerName, teamName) {
-  return AFFILIATE_BASE + encodeURIComponent(NFL_JERSEYS_URL);
+function getBuyLink(playerName, teamKey) {
+  const team = TEAM_TILES.find(t => t.key === teamKey);
+  const dest = team ? team.buyUrl : 'https://www.fanatics.com/nfl/jerseys/o-1338+d-53447856+z-8865-128422821';
+  return AFFILIATE_BASE + encodeURIComponent(dest);
 }
 
 // ── Team tile configuration ───────────────────────────────────────────────
 const TEAM_TILES = [
-  { key: 'cowboys', abbr: 'DAL',  city: 'Cowboys',         c1: '#003594', c2: '#869397' },
-  { key: 'chiefs',  abbr: 'KC',   city: 'Chiefs',          c1: '#E31837', c2: '#FFB81C' },
-  { key: 'rams',    abbr: 'LAR',  city: 'Rams',            c1: '#003594', c2: '#FFA300' },
-  { key: 'patriots',abbr: 'NE',   city: 'Patriots',        c1: '#002244', c2: '#C60C30' },
-  { key: 'giants',  abbr: 'NYG',  city: 'NY Giants',       c1: '#1A3A5C', c2: '#C8262A' },
-  { key: 'eagles',  abbr: 'PHI',  city: 'Eagles',          c1: '#004C54', c2: '#A5ACAF' },
-  { key: 'niners',  abbr: 'SF',   city: '49ers',           c1: '#AA0000', c2: '#B3995D' },
-  { key: 'seahawks',abbr: 'SEA',  city: 'Seahawks',        c1: '#002244', c2: '#69BE28' },
+  { key: 'cowboys', abbr: 'DAL', city: 'Cowboys',  c1: '#003594', c2: '#869397', buyUrl: 'https://www.fanatics.com/nfl/dallas-cowboys/o-2483+t-70824640+z-91962-661726589?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-9%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22d%22%3A%5B%228011%22%5D%7D' },
+  { key: 'chiefs',  abbr: 'KC',  city: 'Chiefs',   c1: '#E31837', c2: '#FFB81C', buyUrl: 'https://www.fanatics.com/nfl/kansas-city-chiefs/o-2472+t-70269247+z-91896-1122630966?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-16%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22d%22%3A%5B%228011%22%5D%7D' },
+  { key: 'rams',    abbr: 'LAR', city: 'Rams',     c1: '#003594', c2: '#FFA300', buyUrl: 'https://www.fanatics.com/nfl/los-angeles-rams/o-1361+t-47485893+z-91373-2828045145?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-19%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22d%22%3A%5B%228011%22%5D%7D' },
+  { key: 'patriots',abbr: 'NE',  city: 'Patriots', c1: '#002244', c2: '#C60C30', buyUrl: 'https://www.fanatics.com/nfl/new-england-patriots/o-3516+t-47484796+z-97035-898587176?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-22%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22d%22%3A%5B%228011%22%5D%7D' },
+  { key: 'giants',  abbr: 'NYG', city: 'Giants',   c1: '#1A3A5C', c2: '#C8262A', buyUrl: 'https://www.fanatics.com/nfl/new-york-giants/o-3572+t-79497891+z-97129-403843569?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-24%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22d%22%3A%5B%228011%22%5D%7D' },
+  { key: 'eagles',  abbr: 'PHI', city: 'Eagles',   c1: '#004C54', c2: '#A5ACAF', buyUrl: 'https://www.fanatics.com/nfl/philadelphia-eagles/o-2461+t-69263771+z-97651-2279483104?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-26%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22d%22%3A%5B%228011%22%5D%7D' },
+  { key: 'niners',  abbr: 'SF',  city: '49ers',    c1: '#AA0000', c2: '#B3995D', buyUrl: 'https://www.fanatics.com/nfl/san-francisco-49ers/o-3527+t-25828229+z-90835-2969106188?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-28%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22d%22%3A%5B%228011%22%5D%7D' },
+  { key: 'seahawks',abbr: 'SEA', city: 'Seahawks', c1: '#002244', c2: '#69BE28', buyUrl: 'https://www.fanatics.com/nfl/seattle-seahawks/o-1361+t-92938242+z-99944-1956564534?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-29%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22d%22%3A%5B%228011%22%5D%7D' },
 ];
 
 // ── Build tile navigation ─────────────────────────────────────────────────
