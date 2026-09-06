@@ -5,6 +5,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JerseyAdvisor — Which jersey should you buy?</title>
+<meta name="description" content="A data-driven NFL jersey advisor. Score current players across performance, tenure, durability, sportsmanship, and popularity — then adjust the weights to find the jersey that's right for you.">
+<meta name="keywords" content="NFL jersey, which jersey to buy, NFL jersey advisor, football jersey recommendation, NFL player rankings, best NFL jersey">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://jerseyadvisor.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="JerseyAdvisor — Which jersey should you buy?">
+<meta property="og:description" content="A data-driven NFL jersey advisor. Score current players across five categories, adjust the weights, and find the jersey that's right for you.">
+<meta property="og:url" content="https://jerseyadvisor.com/">
+<meta property="og:image" content="https://jerseyadvisor.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="JerseyAdvisor">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="JerseyAdvisor — Which jersey should you buy?">
+<meta name="twitter:description" content="A data-driven NFL jersey advisor. Score current players across five categories, adjust the weights, and find the jersey that's right for you.">
+<meta name="twitter:image" content="https://jerseyadvisor.com/og-image.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1B32'/%3E%3Crect x='4' y='4' width='56' height='56' rx='10' fill='none' stroke='%23C9A45C' stroke-width='2'/%3E%3Ctext x='32' y='43' font-family='Georgia, Times New Roman, serif' font-weight='700' font-size='30' fill='%23C9A45C' text-anchor='middle'%3EJA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -32,7 +49,7 @@
   .ai-strip a { color: #8A9BB0; text-decoration: underline; }
   .team-nav { background: var(--navy); padding: 0.75rem 1rem 1rem; }
   .team-nav-label { font-family: var(--font-mono); font-size: 0.65rem; color: #5A6472; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; display: block; margin-bottom: 0.625rem; }
-  .team-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; max-width: 900px; margin: 0 auto; }
+  .team-grid { display: grid; grid-template-columns: repeat(8, 64px); justify-content: center; gap: 0.5rem; max-width: 900px; margin: 0 auto; }
   .team-tile { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 64px; height: 48px; border-radius: 6px; border: 2px solid rgba(255,255,255,0.25); cursor: pointer; transition: all 0.15s; font-family: var(--font-display); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.06em; color: rgba(255,255,255,0.9); position: relative; box-shadow: 0 2px 6px rgba(0,0,0,0.25); }
   .team-tile:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); opacity: 0.9; }
   .team-tile.active { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), 0 4px 16px rgba(201,164,92,0.3); transform: translateY(-1px); }
@@ -90,6 +107,13 @@
   .buy-btn:hover { opacity: 0.85; }
   footer { text-align: center; padding: 2rem 1rem; font-size: 0.72rem; color: var(--text-tertiary); line-height: 1.8; border-top: 1px solid var(--border); max-width: 900px; margin: 0 auto; }
   footer a { color: var(--text-tertiary); text-decoration: underline; }
+  @media (max-width: 600px) {
+    .team-grid { grid-template-columns: repeat(6, 1fr); max-width: 420px; gap: 0.4rem; }
+    .team-tile { width: 100%; height: 44px; }
+  }
+  @media (max-width: 400px) {
+    .team-grid { grid-template-columns: repeat(4, 1fr); max-width: 320px; }
+  }
   @media (max-width: 480px) {
     .slider-row { grid-template-columns: 100px 1fr 24px; }
     .bar-row { grid-template-columns: 90px 1fr 24px; }
