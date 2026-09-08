@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The JerseyAdvisor Story</title>
+<meta name="description" content="Why one sports fan built a data-driven NFL jersey advisor — the origin story behind JerseyAdvisor, how it works, and why it's meant to be fun.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://jerseyadvisor.com/story.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The JerseyAdvisor Story">
+<meta property="og:description" content="Why one sports fan built a data-driven NFL jersey advisor.">
+<meta property="og:url" content="https://jerseyadvisor.com/story.html">
+<meta property="og:image" content="https://jerseyadvisor.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="JerseyAdvisor">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The JerseyAdvisor Story">
+<meta name="twitter:description" content="Why one sports fan built a data-driven NFL jersey advisor.">
+<meta name="twitter:image" content="https://jerseyadvisor.com/og-image.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23C9A45C'/%3E%3Cpath d='M27 8 L32 12 L37 8 L44 11 L52 19 L47 27 L44 24 L44 56 L20 56 L20 24 L17 27 L12 19 L20 11 Z' fill='%230B1B32' stroke='%23FFFFFF' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M27 8 L32 12 L37 8' fill='none' stroke='%23C8262A' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ctext x='32' y='47' font-family='Arial, sans-serif' font-weight='900' font-style='italic' font-size='22' fill='%23FFFFFF' text-anchor='middle'%3E1%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0B1B32; --gold: #C9A45C; --red: #C8262A; --cream: #F2EFE6; --slate: #5A6472;
+    --light: #E8E5DC; --page-bg: #F5F3EE; --border: #D8D5CC; --white: #FFFFFF;
+    --text-primary: #0B1B32; --text-secondary: #5A6472; --text-tertiary: #8A95A3;
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
+  }
+  body { font-family: var(--font-body); background: var(--page-bg); color: var(--text-primary); min-height: 100vh; }
+  header { background: var(--navy); padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .logo { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--cream); letter-spacing: 0.04em; text-decoration: none; }
+  .logo span { color: var(--gold); }
+  .back-link { font-size: 0.78rem; color: #8A95A3; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+  .back-link:hover { color: var(--cream); }
+  .hero { background: var(--navy); padding: 2.25rem 1.5rem 2.5rem; text-align: center; border-bottom: 3px solid var(--gold); }
+  .hero h1 { font-family: var(--font-display); font-size: clamp(1.8rem,5vw,2.8rem); font-weight: 700; color: var(--cream); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.625rem; }
+  .hero p { font-size: 0.92rem; color: #8A95A3; max-width: 480px; margin: 0 auto; line-height: 1.6; }
+  .content { max-width: 700px; margin: 0 auto; padding: 2.75rem 1.25rem 4rem; }
+  article p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.1rem; }
+  article p:last-child { margin-bottom: 0; }
+  article strong { color: var(--text-primary); font-weight: 600; }
+  article ul { margin: 0 0 1.1rem 0; padding-left: 0; list-style: none; }
+  article ul li { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65; padding: 0.4rem 0 0.4rem 1.5rem; position: relative; }
+  article ul li::before { content: '→'; position: absolute; left: 0; color: var(--gold); font-weight: 600; }
+  a.inline-link { color: var(--navy); font-weight: 600; text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 3px; text-decoration-thickness: 2px; }
+  a.inline-link:hover { color: var(--red); }
+  section.story-section { margin-bottom: 2.5rem; }
+  section.story-section:last-of-type { margin-bottom: 0; }
+  .section-label { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: var(--text-primary); margin-bottom: 1.1rem; padding-bottom: 0.6rem; border-bottom: 2px solid var(--border); }
+  .pull-quote { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--navy); line-height: 1.35; padding: 0.25rem 0 0.25rem 1.1rem; border-left: 4px solid var(--gold); margin: 1.4rem 0; }
+  .closing-line { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--navy); text-align: center; margin: 2.5rem 0 1.5rem; line-height: 1.3; }
+  .signoff { text-align: center; font-size: 0.9rem; color: var(--text-secondary); margin-top: 1.5rem; }
+  .cta-wrap { text-align: center; margin: 2.5rem 0; }
+  .cta-btn { display: inline-block; font-family: var(--font-display); font-size: 1rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 0.75rem 1.75rem; border-radius: 6px; text-decoration: none; transition: opacity 0.15s; }
+  .cta-btn:hover { opacity: 0.85; }
+  footer { text-align: center; padding: 2rem 1rem; font-size: 0.72rem; color: var(--text-tertiary); line-height: 1.8; border-top: 1px solid var(--border); max-width: 700px; margin: 0 auto; }
+  footer a { color: var(--text-tertiary); text-decoration: underline; }
+  @media (max-width: 480px) {
+    .pull-quote { font-size: 1.1rem; }
+    .closing-line { font-size: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <a href="/" class="logo">Jersey<span>Advisor</span></a>
+  <a href="/" class="back-link">← Back to tool</a>
+</header>
+<div class="hero">
+  <h1>The JerseyAdvisor Story</h1>
+  <p>Why one sports fan built a data-driven jersey advisor tool — and what he hopes you get out of it.</p>
+</div>
+<div class="content">
+<article>
+
+  <section class="story-section">
+    <div class="section-label">The Origin Story</div>
+    <p>Here's a confession: I have jersey purchasing paralysis.</p>
+    <p>I've been a sports fan my whole life. I have t-shirts, framed photos, pennants, mugs, and all sorts of memorabilia.</p>
+    <p>But whenever I try to purchase a jersey, I freeze up. Because it's a significant financial investment, I start to think:</p>
+    <ul>
+      <li>Is this player good enough?</li>
+      <li>Will he stick on the team?</li>
+      <li>Will he do something stupid to make me embarrassed to wear his jersey?</li>
+    </ul>
+    <p>Most of the time, I end up buying nothing.</p>
+    <p>Recently, a friend mentioned that he regretted a jersey purchase because of something the player did off the field (<strong>exactly my nightmare scenario!</strong>). That led to a conversation about the factors that influence which player's jersey to purchase, and whether they could be objectively calculated to help with the decision.</p>
+    <p>Surely, I thought, there's a tool out there that does that.</p>
+    <p>But when I searched, all I found were pages of evaluations and conversations about jersey styles, rare and unique jerseys, authenticity, etc. The kinds of details that are important to jersey collectors and the most invested sports fans.</p>
+    <div class="pull-quote">But what about the casual to moderately engaged fan, who knows their favorite team and wants advice before making a jersey investment?</div>
+    <p>Or someone who wants to purchase a jersey as a gift for the sports fan in their life?</p>
+    <p>So I decided: if no tool exists, I'm going to build one. And that's how JerseyAdvisor was born.</p>
+  </section>
+
+  <section class="story-section">
+    <div class="section-label">How it Works (The Short Version)</div>
+    <p>JerseyAdvisor is a data-driven, AI-assisted tool that helps NFL fans make smarter jersey purchasing decisions. The concept is simple. Each player in the tool receives a score across five categories:</p>
+    <ul>
+      <li>Performance</li>
+      <li>Tenure (likelihood of being on the team in two to three years)</li>
+      <li>Durability</li>
+      <li>Sportsmanship (on and off the field)</li>
+      <li>Popularity</li>
+    </ul>
+    <p>The weighted average of those five categories is the player's score. The higher the score, the safer the jersey investment.</p>
+    <p>Want the longer version? Head on over to the <a href="/how-it-works.html" class="inline-link">How It Works</a> page for the full scoring formula and criteria for inclusion.</p>
+    <p>Right now, only active roster NFL players are included. I'm hoping to expand to retired players and legends, and then eventually to other sports leagues.</p>
+    <p>The tool also includes some AI-assisted player write-ups with details that might influence your purchasing decision. Yes, I review them but I'm only one person, so <a href="https://forms.gle/LbfwkHHpEqBqBEvW7" class="inline-link" target="_blank" rel="noopener">drop me a note</a> if something seems off.</p>
+  </section>
+
+  <section class="story-section">
+    <div class="section-label">Customized for You (Yes, YOU!)</div>
+    <p>But wait a minute. Not all evaluations are created equal. What if I don't care much about how popular a player is or their injury history, but their track record of sportsmanship means a lot to me? Or what if I care about something else the tool doesn't cover, like where the player went to college, their jersey number, or (yikes) their political affiliation?</p>
+    <div class="pull-quote">Here's where JerseyAdvisor really shines: it's completely customizable!</div>
+    <p>Care more or less about a category? Move the sliders at the top of the tool to decrease or increase a category's weight in the score. Want to add your own factor that matters to you, personally, and isn't covered in the five categories? Click the box to activate <strong>My X-Factor</strong>, move the slider, and increase or decrease the score accordingly.</p>
+  </section>
+
+  <section class="story-section">
+    <div class="section-label">For Your Entertainment</div>
+    <p>Bottom line, can I guarantee that JerseyAdvisor will help you pick the perfect, can't-miss, no-regrets, safest-investment jersey? Of course not! But it can offer you a score calculated using objective criteria, which you can then customize to your preferences to help you decide.</p>
+    <p>At the end of the day, this tool is for fun. Maybe it will help spark some debates about whose jersey is a better investment. And if it helps you in your jersey purchasing decision, even better!</p>
+  </section>
+
+  <section class="story-section">
+    <div class="section-label">Let's Make It Better Together</div>
+    <p>Please let me know if you have <a href="mailto:jerseyadvisortool@gmail.com" class="inline-link">feedback or suggestions</a> to improve the tool, or perhaps a story to share about how JerseyAdvisor influenced your purchasing decision. I sincerely value all user input.</p>
+    <p>One last thing: if you find JerseyAdvisor fun and useful and decide to purchase, consider using the links within the tool. I'll get a small commission from each jersey purchased using the affiliate links, which will help cover the costs of running the site.</p>
+  </section>
+
+  <div class="closing-line">Thanks for visiting JerseyAdvisor, and I hope you find the answer to the age-old question:<br>which player's jersey should I actually buy?</div>
+  <div class="signoff">— Gary (JerseyAdvisor creator and founder)</div>
+
+  <div class="cta-wrap">
+    <a href="/" class="cta-btn">Find your jersey →</a>
+  </div>
+
+</article>
+</div>
+<footer>
+  JerseyAdvisor is an independent tool — not affiliated with the NFL, any team, or any jersey manufacturer.<br>
+  <a href="/">← Back to JerseyAdvisor</a> &nbsp;·&nbsp; <a href="/how-it-works.html">How scores work</a> &nbsp;·&nbsp; <a href="mailto:jerseyadvisortool@gmail.com">Contact us</a> &nbsp;·&nbsp; <a href="https://forms.gle/LbfwkHHpEqBqBEvW7">Flag an inaccuracy</a>
+</footer>
+</body>
+</html>
