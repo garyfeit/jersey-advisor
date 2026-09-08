@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="JerseyAdvisor — Which jersey should you buy?">
 <meta name="twitter:description" content="A data-driven NFL jersey advisor. Score current players across five categories, adjust the weights, and find the jersey that's right for you.">
 <meta name="twitter:image" content="https://jerseyadvisor.com/og-image.png">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B1B32'/%3E%3Cpath d='M27 8 L32 12 L37 8 L44 11 L52 19 L47 27 L44 24 L44 56 L20 56 L20 24 L17 27 L12 19 L20 11 Z' fill='none' stroke='%23C9A45C' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cpath d='M27 8 L32 12 L37 8' fill='none' stroke='%23C8262A' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ctext x='32' y='46' font-family='Arial, sans-serif' font-weight='900' font-style='italic' font-size='20' fill='%23C9A45C' text-anchor='middle'%3E1%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23C9A45C'/%3E%3Cpath d='M27 8 L32 12 L37 8 L44 11 L52 19 L47 27 L44 24 L44 56 L20 56 L20 24 L17 27 L12 19 L20 11 Z' fill='%230B1B32' stroke='%23FFFFFF' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M27 8 L32 12 L37 8' fill='none' stroke='%23C8262A' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ctext x='32' y='47' font-family='Arial, sans-serif' font-weight='900' font-style='italic' font-size='22' fill='%23FFFFFF' text-anchor='middle'%3E1%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -38,7 +38,7 @@
   }
   body { font-family: var(--font-body); background: var(--page-bg); color: var(--text-primary); min-height: 100vh; }
   header { background: var(--navy); padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 100; }
-  .logo { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--cream); letter-spacing: 0.04em; text-transform: uppercase; }
+  .logo { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--cream); letter-spacing: 0.04em; }
   .logo span { color: var(--gold); }
   .beta-tag { font-family: var(--font-mono); font-size: 0.6rem; color: var(--gold); border: 1px solid var(--gold); padding: 2px 5px; border-radius: 3px; margin-left: 8px; vertical-align: middle; letter-spacing: 0.08em; }
   .hero { background: var(--navy); padding: 2rem 1.5rem 2.5rem; text-align: center; border-bottom: 3px solid var(--gold); }
@@ -126,7 +126,7 @@
 <body>
 <header>
   <div class="logo">Jersey<span>Advisor</span><span class="beta-tag">BETA</span></div>
-  <div style="font-size:0.72rem;color:#5A6472;">Prototype · August 2026</div>
+  <div style="font-size:0.72rem;color:#5A6472;">September 2026</div>
 </header>
 <div class="hero">
   <h1>Which jersey should<br>you <em>actually</em> buy?</h1>
@@ -140,7 +140,7 @@
   <div class="team-grid" id="teamGrid"></div>
 </div>
 <div class="app">
-  <div class="disclaimer"><strong>Prototype — feedback welcome.</strong> Scores are formula-generated using public data. Current NFL players only — legends mode coming soon. Something seem off? <a href="https://forms.gle/LbfwkHHpEqBqBEvW7" target="_blank" rel="noopener">Flag it here →</a></div>
+  <div class="disclaimer"><strong>Beta version — feedback welcome.</strong> Scores are formula-generated using public data. Current NFL players only — legends mode coming soon. Something seem off? <a href="https://forms.gle/LbfwkHHpEqBqBEvW7" target="_blank" rel="noopener">Flag it here →</a></div>
   <div class="controls-card">
     <span class="controls-label">How much does each factor matter to you?</span>
     <div class="sliders-grid" id="sliders"></div>
@@ -152,7 +152,7 @@
   Covers current players on active NFL rosters. Legends and retired player jerseys coming soon.<br>
   Player notes are <strong>AI-generated</strong> using public data and reviewed for accuracy. Scores and rosters updated regularly.<br>
   <strong>Something seem off?</strong> <a href="https://forms.gle/LbfwkHHpEqBqBEvW7" target="_blank" rel="noopener">Flag an inaccurate note here</a> &nbsp;·&nbsp; <a href="mailto:jerseyadvisortool@gmail.com">Contact us</a><br>
-  <a href="/how-it-works.html">How scores work →</a> &nbsp;·&nbsp; Prototype · August 2026
+  <a href="/how-it-works.html">How scores work →</a> &nbsp;·&nbsp; Beta version · September 2026
 </footer>
 <div style="display:none;">Impact-Site-Verification: 66a4f8a3-4fc5-4571-ac0b-632ce173e146</div>
 <script>
