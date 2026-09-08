@@ -38,6 +38,11 @@
   }
   body { font-family: var(--font-body); background: var(--page-bg); color: var(--text-primary); min-height: 100vh; }
   header { background: var(--navy); padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 100; }
+  .header-nav { display: flex; align-items: center; }
+  .header-nav a { font-size: 0.78rem; color: #B8C0CC; text-decoration: none; font-weight: 500; transition: color 0.15s; margin-right: 1.25rem; }
+  .header-nav a:hover { color: var(--gold); }
+  .header-right { display: flex; align-items: center; }
+  @media (max-width: 560px) { .header-nav { display: none; } }
   .logo { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--cream); letter-spacing: 0.04em; }
   .logo span { color: var(--gold); }
   .beta-tag { font-family: var(--font-mono); font-size: 0.6rem; color: var(--gold); border: 1px solid var(--gold); padding: 2px 5px; border-radius: 3px; margin-left: 8px; vertical-align: middle; letter-spacing: 0.08em; }
@@ -126,7 +131,13 @@
 <body>
 <header>
   <div class="logo">Jersey<span>Advisor</span><span class="beta-tag">BETA</span></div>
-  <div style="font-size:0.72rem;color:#5A6472;">September 2026</div>
+  <div class="header-right">
+    <nav class="header-nav">
+      <a href="/story.html">Our Story</a>
+      <a href="/how-it-works.html">How It Works</a>
+    </nav>
+    <div style="font-size:0.72rem;color:#5A6472;margin-left:1.25rem;">September 2026</div>
+  </div>
 </header>
 <div class="hero">
   <h1>Which jersey should<br>you <em>actually</em> buy?</h1>
@@ -148,11 +159,16 @@
   <div id="cards"></div>
 </div>
 <footer>
+  <div style="margin-bottom: 1rem;">
+    <a href="/story.html" style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--navy); text-decoration: none;">Our Story</a>
+    <span style="color: var(--border);"> &nbsp;·&nbsp; </span>
+    <a href="/how-it-works.html" style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--navy); text-decoration: none;">How It Works</a>
+  </div>
   JerseyAdvisor is an independent tool — not affiliated with the NFL, any team, or any jersey manufacturer.<br>
   Covers current players on active NFL rosters. Legends and retired player jerseys coming soon.<br>
   Player notes are <strong>AI-generated</strong> using public data and reviewed for accuracy. Scores and rosters updated regularly.<br>
   <strong>Something seem off?</strong> <a href="https://forms.gle/LbfwkHHpEqBqBEvW7" target="_blank" rel="noopener">Flag an inaccurate note here</a> &nbsp;·&nbsp; <a href="mailto:jerseyadvisortool@gmail.com">Contact us</a><br>
-  <a href="/how-it-works.html">How scores work →</a> &nbsp;·&nbsp; Beta version · September 2026
+  Beta version · September 2026
 </footer>
 <div style="display:none;">Impact-Site-Verification: 66a4f8a3-4fc5-4571-ac0b-632ce173e146</div>
 <script>
@@ -942,7 +958,7 @@ const TEAMS={
      overview:"A five-year Patriots veteran and one of the more underappreciated interior defenders in the AFC, Barmore has been the anchor of New England's defensive line since 2021 — a fan favorite whose consistency and effort have earned genuine loyalty in Foxboro.",
      recent:"No notable updates this offseason; enters camp as the starting DT2 alongside Milton Williams after five seasons of steady production, with the young defensive line around him expected to take a significant step in 2026."}
   ]},
-  jets:{name:'New York Jets',color1:'#125740',color2:'#FFFFFF',accent:'#000000',players:[
+  jets:{name:'New York Jets',color1:'#125740',color2:'#FFFFFF',accent:'#FFFFFF',players:[
     {name:"Geno Smith",pos:"QB",num:7,quality:5.5,tenure:4.5,injury:7.0,conduct:8.5,popularity:5.5,
      overview:"A former Comeback Player of the Year who returns to New York for a second stint after an ugly 2025 season with the Raiders, Smith is a clear bridge starter at 35 — the Jets know he isn't their long-term answer at quarterback, but he gives new head coach Aaron Glenn and offensive coordinator Frank Reich a steady veteran presence while the roster continues its rebuild.",
      recent:"Signed a one-year deal, with head coach Aaron Glenn deliberately avoiding any commitment to how long he'll hold the job; the Jets used their draft capital on skill-position and defensive talent rather than a quarterback, all but confirming Smith is this year's placeholder rather than next year's plan."},
