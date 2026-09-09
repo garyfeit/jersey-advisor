@@ -1514,7 +1514,14 @@ function resortCards(){
 }
 // ── Affiliate link builder ───────────────────────────────────────────────
 const AFFILIATE_BASE = 'https://fanatics.93n6tx.net/3kMZDr?u=';
+const PLAYER_BUY_OVERRIDES = {
+  'Jaxon Smith-Njigba': 'https://www.fanatics.com/nfl/seattle-seahawks/o-1361+t-92938242+z-99944-1956564534?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-29%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22a%22%3A%5B%2222362%22%5D%2C%22d%22%3A%5B%228011%22%5D%7D',
+  'Drake Maye': 'https://www.fanatics.com/nfl/new-england-patriots/o-3516+t-47484796+z-97035-898587176?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-22%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22a%22%3A%5B%2221888%22%5D%2C%22d%22%3A%5B%228011%22%5D%7D'
+};
 function getBuyLink(playerName, teamKey) {
+  if (PLAYER_BUY_OVERRIDES[playerName]) {
+    return AFFILIATE_BASE + encodeURIComponent(PLAYER_BUY_OVERRIDES[playerName]);
+  }
   const team = TEAM_TILES.find(t => t.key === teamKey);
   const dest = team ? team.buyUrl : 'https://www.fanatics.com/nfl/jerseys/o-1338+d-53447856+z-8865-128422821';
   return AFFILIATE_BASE + encodeURIComponent(dest);
