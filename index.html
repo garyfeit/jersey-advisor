@@ -858,9 +858,9 @@ const TEAMS={
     {name:"Ashton Jeanty",pos:"RB",num:2,quality:7.5,tenure:9.0,injury:6.0,conduct:8.5,popularity:8.0,
      overview:"A rookie sensation who set the Raiders' franchise record for scrimmage yards in a debut season (1,321) despite playing behind one of the NFL's worst offensive lines, Jeanty is a electrifying, tough runner whose 55 catches as a rookie prove he's far more than a two-down back.",
      recent:"Suffered a scary-looking ankle injury diving for a pass in an August practice that had teammates taking a knee in prayer; the sprain is not considered long-term, but his availability for the season opener remains uncertain as the Raiders hope a much-improved offensive line finally gives him room to run."},
-    {name:"Brock Bowers",pos:"TE",num:89,quality:8.0,tenure:9.0,injury:5.5,conduct:8.5,popularity:8.0,
-     overview:"The most productive rookie tight end in NFL history — 112 receptions and 1,194 yards in his 2024 debut, earning First-team All-Pro — Bowers remains one of the most dangerous receiving weapons in football regardless of position, though a Week 1 knee injury hampered his entire 2025 sophomore season and ultimately ended it on injured reserve.",
-     recent:"Enters his third season fully healthy after the knee injury cost him production in 2025 (64 catches, 680 yards in 12 games); still the clear focal point of the Raiders' passing offense, his connection with whichever quarterback ends up starting will be the single biggest determinant of how competitive the offense can be in 2026."},
+    {name:"Brock Bowers",pos:"TE",num:89,quality:8.0,tenure:9.0,injury:4.5,conduct:8.5,popularity:8.0,checked:'September 2026',
+     overview:"The most productive rookie tight end in NFL history — 112 receptions and 1,194 yards in his 2024 debut, earning First-team All-Pro — Bowers remains one of the most dangerous receiving weapons in football regardless of position, though recurring issues with the same knee (a PCL injury and bone bruise that ended his 2025 on IR, now a second procedure in less than a year) have turned durability into a genuine, ongoing concern rather than a one-time setback.",
+     recent:"Underwent a meniscus trim on the same knee on September 9 after getting 'banged up a little' in camp, and is expected to miss 'a game or two' to open the season — ruled out for the Week 1 opener against Miami with a target return of Week 2 or 3. Michael Mayer will handle the bulk of the tight end reps in his absence."},
     {name:"Tyler Linderbaum",pos:"C",num:65,quality:8.5,tenure:8.5,injury:8.0,conduct:8.5,popularity:5.5,
      overview:"A three-time Pro Bowler who just earned his first All-Pro nod in 2025, Linderbaum left Baltimore in free agency and signed a 3-year, $81 million deal that instantly makes him the best offensive lineman on the roster — widely described as the missing piece the Raiders' offensive line desperately needed after years of instability up front.",
      recent:"Called 'the NFL's best interior offensive lineman' by team sources upon his arrival; his presence alone is expected to dramatically improve the run-blocking that limited Ashton Jeanty to a league-worst 0.6 yards before contact as a rookie."},
@@ -1174,7 +1174,7 @@ const TEAMS={
     {name:"Alaric Jackson",pos:"LT",num:77,quality:7.5,tenure:8.5,injury:7.0,conduct:8.5,popularity:5.0,
      overview:"The Rams' long-term franchise left tackle and the only starter on an offensive line full of contract-year players signed beyond 2026, Jackson is the quiet protector of Matthew Stafford's blindside — a 'football knowledge' pick for fans who understand what keeping Stafford upright means.",
      recent:"No notable updates this offseason; enters camp as the anchor of an offensive line that is otherwise in flux with four starters in contract years, making his stability all the more valuable to the Rams' championship aspirations."},
-    {name:"Myles Garrett",pos:"OLB",num:95,quality:9.5,tenure:8.0,injury:6.5,conduct:8.5,popularity:9.0,
+    {name:"Myles Garrett",pos:"DE",num:95,quality:9.5,tenure:8.0,injury:6.5,conduct:8.5,popularity:9.0,checked:'September 2026',
      overview:"The most dominant pass rusher on the planet — two-time Defensive Player of the Year, five-time First-team All-Pro, seven-time Pro Bowler, NFL record 23 sacks in a single season — Garrett was traded to Los Angeles to be the final piece of a Super Bowl contender, and the football world is watching.",
      recent:"He and Stafford have been described as having immediate chemistry, with Garrett publicly stating he chose the Rams specifically because he wants to win a Super Bowl before retiring; teammates have called his presence an immediate culture shift for the defensive side of the ball."},
     {name:"Aaron Donald",pos:"DT",num:99,legacy:true,quality:7.5,tenure:4.0,injury:6.0,conduct:8.5,popularity:9.5,
@@ -1524,7 +1524,9 @@ function resortCards(){
 const AFFILIATE_BASE = 'https://fanatics.93n6tx.net/3kMZDr?u=';
 const PLAYER_BUY_OVERRIDES = {
   'Jaxon Smith-Njigba': 'https://www.fanatics.com/nfl/seattle-seahawks/o-1361+t-92938242+z-99944-1956564534?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-29%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22a%22%3A%5B%2222362%22%5D%2C%22d%22%3A%5B%228011%22%5D%7D',
-  'Drake Maye': 'https://www.fanatics.com/nfl/new-england-patriots/o-3516+t-47484796+z-97035-898587176?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-22%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22a%22%3A%5B%2221888%22%5D%2C%22d%22%3A%5B%228011%22%5D%7D'
+  'Drake Maye': 'https://www.fanatics.com/nfl/new-england-patriots/o-3516+t-47484796+z-97035-898587176?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-22%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22a%22%3A%5B%2221888%22%5D%2C%22d%22%3A%5B%228011%22%5D%7D',
+  'Myles Garrett': 'https://www.fanatics.com/nfl/los-angeles-rams/o-1361+t-47485893+z-91373-2828045145?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-19%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22a%22%3A%5B%2210486%22%5D%2C%22d%22%3A%5B%228011%22%5D%7D',
+  'Brock Purdy': 'https://www.fanatics.com/nfl/san-francisco-49ers/o-3527+t-25828229+z-90835-2969106188?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-28%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22a%22%3A%5B%2222034%22%5D%2C%22d%22%3A%5B%228011%22%5D%7D'
 };
 function getBuyLink(playerName, teamKey) {
   if (PLAYER_BUY_OVERRIDES[playerName]) {
