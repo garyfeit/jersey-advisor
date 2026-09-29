@@ -1389,7 +1389,10 @@ function buildSliders(){
   });
   el.querySelectorAll('input[type=range]').forEach(inp=>{
     inp.addEventListener('input',e=>{weights[e.target.dataset.key]=parseInt(e.target.value);document.querySelector(`[data-out="${e.target.dataset.key}"]`).textContent=e.target.value;updateAllScores();});
-    inp.addEventListener('change',()=>resortCards());
+    inp.addEventListener('change',e=>{
+      resortCards();
+      if(typeof gtag==='function')gtag('event','weight_slider_adjusted',{category:e.target.dataset.key,value:weights[e.target.dataset.key]});
+    });
   });
 }
 function buildCards(){
@@ -1444,7 +1447,10 @@ function makeCard(p,i,team){
     <span class="note-label" style="margin-top:8px;">Latest update</span>
     <p class="note-recent">${p.recent}</p>
     <p class="note-updated">Last checked: ${p.checked || 'August 2026'}</p>
-    <div class="buy-wrap"><a class="buy-btn" href="${getBuyLink(p.name, currentTeam)}" target="_blank" rel="noopener sponsored">Buy this jersey →</a></div>`;
+    <div class="buy-wrap"><a class="buy-btn" href="${getBuyLink(p.name, currentTeam)}" target="_blank" rel="noopener sponsored" data-buy-link="${p.name}">Buy this jersey →</a></div>`;
+  card.querySelector(`[data-buy-link="${p.name}"]`).addEventListener('click',()=>{
+    if(typeof gtag==='function')gtag('event','buy_link_click',{player_name:p.name,team:currentTeam,score:computeScore(p).toFixed(1)});
+  });
   card.querySelector(`[data-wc-chk="${p.name}"]`).addEventListener('change',e=>{
     perPlayer[p.name].wcOn=e.target.checked;
     const slider=card.querySelector(`[data-wc-slider="${p.name}"]`);
@@ -1459,11 +1465,15 @@ function makeCard(p,i,team){
     card.querySelector(`[data-wc-val="${p.name}"]`).textContent=(5+perPlayer[p.name].wc).toFixed(1);
     updateAllScores();
   });
-  card.querySelector(`[data-wc-slider="${p.name}"]`).addEventListener('change',()=>resortCards());
+  card.querySelector(`[data-wc-slider="${p.name}"]`).addEventListener('change',()=>{
+    resortCards();
+    if(typeof gtag==='function')gtag('event','xfactor_adjusted',{player_name:p.name,team:currentTeam});
+  });
   card.querySelector(`[data-inj-chk="${p.name}"]`).addEventListener('change',e=>{
     perPlayer[p.name].injOff=e.target.checked;
     updateInjuryVisual(p.name,e.target.checked,p.injury);
     updateScoreInPlace(p.name);
+    if(typeof gtag==='function')gtag('event','durability_toggle',{player_name:p.name,team:currentTeam,excluded:e.target.checked});
   });
   return card;
 }
@@ -1608,6 +1618,7 @@ function buildTileNav() {
       tile.classList.add('active');
       tile.style.borderColor = 'var(--gold)';
       buildCards();
+      if(typeof gtag==='function')gtag('event','team_selected',{team:t.key});
     });
     grid.appendChild(tile);
   });
