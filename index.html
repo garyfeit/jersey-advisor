@@ -385,9 +385,9 @@ const TEAMS={
     {name:"Jayden Reed",pos:"WR",num:11,quality:7.0,tenure:8.5,injury:5.0,conduct:8.5,popularity:6.5,
      overview:"A 3-year, $50 million extension rewards Reed's role as Jordan Love's most reliable slot weapon — a precise, quick receiver who has shown the ability to be a top target when healthy, but has now missed significant time with injuries in consecutive seasons.",
      recent:"Returning to full health after missing most of 2025; Love has spoken specifically about his excitement to have Reed back as a full participant — the Packers' receiver room has genuine upside if Watson, Reed, and Golden can all stay healthy together for the first time."},
-    {name:"Matthew Golden",pos:"WR",num:0,quality:6.5,tenure:9.0,injury:7.5,conduct:8.5,popularity:6.5,
+    {name:"Matthew Golden",pos:"WR",num:0,quality:6.5,tenure:9.0,injury:7.5,conduct:8.5,popularity:6.5,checked:'October 2026',
      overview:"The first wide receiver the Packers have drafted in the first round since 2002, Golden arrived as the No. 23 overall pick in 2025 with a remarkable backstory — his family lost their childhood home in eighth grade, and reclaiming it was a driving motivation throughout his college career at Houston and Texas.",
-     recent:"Entering his second season with a 'much better setup' per analysts — now in a full WR room with Watson and Reed — Golden had 29 receptions and 361 yards in his rookie year and is expected to take a significant step forward in year two."},
+     recent:"Living up to his first-round billing in his second season, Golden has become Jordan Love's most-targeted receiver and has already topped his rookie production, giving Green Bay a young, productive playmaker to pair with Christian Watson."},
     {name:"Tucker Kraft",pos:"TE",num:85,quality:8.5,tenure:9.0,injury:4.5,conduct:8.5,popularity:7.5,checked:'September 2026',
      overview:"A 2023 third-round pick who has emerged as one of the best young tight ends in football — the only TE alongside George Kittle to post 50+ receptions, 700+ yards, 7+ TDs and 14+ yards per catch in a single season — Kraft was TE2 in fantasy scoring when he tore his ACL in Week 9 of 2025, and the Packers have now made his long-term future official.",
      recent:"Signed a 4-year extension worth up to $92 million (including a $26.5 million signing bonus) just one day before Green Bay's season opener — general manager Brian Gutekunst pushed to get the deal done before Week 1, a clear signal of how central Kraft is to the Packers' plans."},
@@ -1509,6 +1509,7 @@ function resortCards(){
 // ── Affiliate link builder ───────────────────────────────────────────────
 const AFFILIATE_BASE = 'https://fanatics.93n6tx.net/3kMZDr?u=';
 const PLAYER_BUY_OVERRIDES = {
+  'Matthew Golden': 'https://www.fanatics.com/nfl/green-bay-packers/o-3516+t-36593543+z-96868-3818790469?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-12%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22a%22%3A%5B%2299900%22%5D%2C%22d%22%3A%5B%228011%22%5D%7D',
   "De'Von Achane": 'https://www.fanatics.com/nfl/miami-dolphins/o-1327+t-92268105+z-95624-1241047254?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-20%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22a%22%3A%5B%2236615%22%5D%2C%22d%22%3A%5B%228011%22%5D%7D',
   'Jordyn Brooks': 'https://www.fanatics.com/nfl/miami-dolphins/o-1327+t-92268105+z-95624-1241047254?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-20%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22a%22%3A%5B%2215346%22%5D%2C%22d%22%3A%5B%228011%22%5D%7D',
   'Jacob Rodriguez': 'https://www.fanatics.com/nfl/miami-dolphins/o-1327+t-92268105+z-95624-1241047254?ab=%7Bwt-dropdown%7D%7Bdm-FDC%7D%7Bpt-olp%7D%7Bct-nfl-20%7D&sortOption=TopSellers&pageSize=72&filters=%7B%22a%22%3A%5B%2237907%22%5D%2C%22d%22%3A%5B%228011%22%5D%7D',
