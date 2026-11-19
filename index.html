@@ -1741,6 +1741,16 @@ function buildTileNav() {
 const savedTeam = sessionStorage.getItem('ja_team');
 if (savedTeam && TEAMS[savedTeam]) currentTeam = savedTeam;
 
+// Deep link: ?team=cowboys preselects a team (used for team-specific links and ads)
+(function(){
+  try{
+    let q=(new URLSearchParams(location.search).get('team')||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+    const alias={'49ers':'niners','sf':'niners','sanfrancisco':'niners','buccaneers':'bucs','tampabay':'bucs'};
+    if(alias[q])q=alias[q];
+    if(q&&TEAMS[q])currentTeam=q;
+  }catch(e){}
+})();
+
 buildSliders();
 buildTileNav();
 buildCards();
